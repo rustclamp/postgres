@@ -1,0 +1,22 @@
+[package]
+name = "rustclamp-postgres"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.96.1"
+description = "Optional SQLx PostgreSQL pool and transaction integration for RustClamp."
+repository = "https://github.com/rustclamp/postgres"
+publish = false
+
+[dependencies]
+rustclamp-core = { version = "0.1.0", path = "../core" }
+sqlx = { version = "0.9.0", default-features = false, features = ["postgres", "runtime-tokio", "tls-rustls-ring-webpki"] }
+
+[dev-dependencies]
+tokio = { version = "1.53.1", features = ["macros", "rt", "time"] }
+
+[lints.rust]
+unsafe_code = "forbid"
+missing_docs = "deny"
+
+[lints.rustdoc]
+broken_intra_doc_links = "deny"
