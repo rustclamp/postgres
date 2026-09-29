@@ -5,6 +5,7 @@ edition = "2024"
 rust-version = "1.96.1"
 description = "Optional SQLx PostgreSQL pool and transaction integration for RustClamp."
 repository = "https://github.com/rustclamp/postgres"
+license = "MIT OR Apache-2.0"
 publish = false
 
 [dependencies]
