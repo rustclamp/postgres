@@ -1,15 +1,52 @@
+<img src="https://docs.rustclamp.com/assets/rustclamp-logo.png" alt="RustClamp logo" width="160">
+
 # rustclamp-postgres
 
-Optional PostgreSQL integration using SQLx's Tokio pool and transaction APIs.
-The package owns PostgreSQL pool configuration, lifecycle ownership, typed
-database qualification, and explicit migration planning. It does not add SQL,
-driver types, or runtime dependencies to Core or Kernel.
+PostgreSQL integration for [RustClamp](https://github.com/rustclamp/rustclamp)
+on SQLx's Tokio pool. It owns pool configuration and lifecycle, typed database
+qualification, and explicit migration planning. No SQL or driver types leak into
+Core or Kernel; SQLx is re-exported (`rustclamp_postgres::sqlx`) for anything driver-specific.
+Domain repository ports and error mapping stay in your application.
 
-The API keeps SQLx types available to callers that need ecosystem-specific
-features. Application code owns domain repository ports and maps driver errors
-into its semantic errors.
+## Install
 
-See [Phase 6 boundary evidence](../rustclamp/docs/adr/0005-phase6-integration-boundaries.md).
+Not yet published to crates.io; depend on it from git (Rust 1.96.1+, edition 2024):
+
+```toml
+[dependencies]
+rustclamp-postgres = { git = "https://github.com/rustclamp/postgres" }
+```
+
+## Example
+
+```rust
+use rustclamp_postgres::{Migration, Migrations, PoolConfig, Primary};
+
+let db = PoolConfig::<Primary>::new("postgres://localhost/app", 10).connect().await?;
+db.health().await?;
+
+let migrations = Migrations::<Primary>::new(vec![Migration {
+    version: 1,
+    description: "create users",
+    sql: "CREATE TABLE users (id BIGINT PRIMARY KEY)",
+}])?;
+migrations.run(db.pool()).await?;
+
+let tx = db.begin().await?;
+// ... queries on &mut *tx ...
+tx.commit().await?;
+db.close().await;
+```
+
+## Main API
+
+- `PoolConfig::<Q>` (`new`, `with_connect_timeout`, `connect`) and `Database<Q>`: `pool`, `begin`, `health`, `close`, `ownership`; `Database::from_pool(pool, Ownership)` adopts an application-owned pool.
+- Qualifiers `Primary` and `Analytics` keep multiple databases apart in the type system.
+- `Migrations::<Q>::new` validates an ordered plan (`MigrationPlanError`); `run` applies versions not yet present.
+
+`compose.yaml` starts a local PostgreSQL for the integration tests.
+
+Full documentation: <https://docs.rustclamp.com>
 
 ## License
 
