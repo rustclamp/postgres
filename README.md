@@ -10,11 +10,11 @@ Domain repository ports and error mapping stay in your application.
 
 ## Install
 
-Not yet published to crates.io; depend on it from git (Rust 1.96.1+, edition 2024):
+Rust 1.96.1+, edition 2024:
 
 ```toml
 [dependencies]
-rustclamp-postgres = { git = "https://github.com/rustclamp/postgres" }
+rustclamp-postgres = "1"
 ```
 
 ## Example
