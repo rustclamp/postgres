@@ -1,6 +1,6 @@
 [package]
 name = "rustclamp-postgres"
-version = "0.1.0"
+version = "1.0.0"
 edition = "2024"
 rust-version = "1.96.1"
 description = "Optional SQLx PostgreSQL pool and transaction integration for RustClamp."
@@ -13,7 +13,7 @@ keywords = ["framework", "postgres", "sqlx", "database"]
 categories = ["database"]
 
 [dependencies]
-rustclamp-core = { version = "0.1.0", path = "../core" }
+rustclamp-core = { version = "1.0.0", path = "../core" }
 sqlx = { version = "0.9.0", default-features = false, features = ["postgres", "runtime-tokio", "tls-rustls-ring-webpki"] }
 
 [dev-dependencies]
