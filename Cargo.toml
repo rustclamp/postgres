@@ -1,6 +1,6 @@
 [package]
 name = "rustclamp-postgres"
-version = "1.0.0"
+version = "1.1.0"
 edition = "2024"
 rust-version = "1.96.1"
 description = "Optional SQLx PostgreSQL pool and transaction integration for RustClamp."
@@ -18,9 +18,9 @@ idempotency = ["dep:rustclamp-http", "rustclamp-http/idempotency"]
 scheduler = ["dep:rustclamp-scheduler"]
 
 [dependencies]
-rustclamp-scheduler = { version = "1.0.0", path = "../scheduler", optional = true }
+rustclamp-scheduler = { version = "2.0.0", path = "../scheduler", optional = true }
 rustclamp-core = { version = "1.0.0", path = "../core" }
-rustclamp-http = { version = "1.0.0", path = "../http", optional = true }
+rustclamp-http = { version = "1.1.0", path = "../http", optional = true }
 sqlx = { version = "0.9.0", default-features = false, features = ["postgres", "runtime-tokio", "tls-rustls-ring-webpki"] }
 
 [dev-dependencies]
