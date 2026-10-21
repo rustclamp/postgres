@@ -14,6 +14,11 @@ use sqlx::postgres::{PgPool, PgPoolOptions};
 mod idempotency;
 #[cfg(feature = "idempotency")]
 pub use idempotency::{PgIdempotencyStore, idempotency_migration};
+mod lock;
+
+#[cfg(feature = "scheduler")]
+pub use lock::AdvisoryLeader;
+pub use lock::{LockGuard, LockKey};
 
 /// SQLx remains accessible for adapter-specific queries and types.
 pub use sqlx;

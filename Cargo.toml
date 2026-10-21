@@ -14,8 +14,11 @@ categories = ["database"]
 
 [features]
 idempotency = ["dep:rustclamp-http", "rustclamp-http/idempotency"]
+# AdvisoryLeader: rustclamp-scheduler's LeaderLock on an advisory lock.
+scheduler = ["dep:rustclamp-scheduler"]
 
 [dependencies]
+rustclamp-scheduler = { version = "1.0.0", path = "../scheduler", optional = true }
 rustclamp-core = { version = "1.0.0", path = "../core" }
 rustclamp-http = { version = "1.0.0", path = "../http", optional = true }
 sqlx = { version = "0.9.0", default-features = false, features = ["postgres", "runtime-tokio", "tls-rustls-ring-webpki"] }
