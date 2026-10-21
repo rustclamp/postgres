@@ -44,6 +44,12 @@ db.close().await;
 - Qualifiers `Primary` and `Analytics` keep multiple databases apart in the type system.
 - `Migrations::<Q>::new` validates an ordered plan (`MigrationPlanError`); `run` applies versions not yet present.
 
+## Features
+
+| Feature | Adds |
+| --- | --- |
+| `idempotency` | `PgIdempotencyStore`, a shared store for rustclamp-http's `with_idempotency` (its `idempotency` feature): the claim is one `INSERT ... ON CONFLICT DO NOTHING`, so concurrent retries run the handler once across instances. Add `idempotency_migration(version)` to your plan; call `delete_expired()` from a scheduled job |
+
 `compose.yaml` starts a local PostgreSQL for the integration tests.
 
 Full documentation: <https://docs.rustclamp.com>

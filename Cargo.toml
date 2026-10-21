@@ -12,12 +12,17 @@ readme = "README.md"
 keywords = ["framework", "postgres", "sqlx", "database"]
 categories = ["database"]
 
+[features]
+idempotency = ["dep:rustclamp-http", "rustclamp-http/idempotency"]
+
 [dependencies]
 rustclamp-core = { version = "1.0.0", path = "../core" }
+rustclamp-http = { version = "1.0.0", path = "../http", optional = true }
 sqlx = { version = "0.9.0", default-features = false, features = ["postgres", "runtime-tokio", "tls-rustls-ring-webpki"] }
 
 [dev-dependencies]
-tokio = { version = "1.53.1", features = ["macros", "rt", "time"] }
+tokio = { version = "1.53.1", features = ["macros", "rt", "sync", "time"] }
+tower = { version = "0.5", features = ["util"] }
 
 [lints.rust]
 unsafe_code = "forbid"
