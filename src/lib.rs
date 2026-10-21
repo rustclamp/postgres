@@ -10,6 +10,11 @@ use std::time::Duration;
 use sqlx::Postgres;
 use sqlx::postgres::{PgPool, PgPoolOptions};
 
+#[cfg(feature = "idempotency")]
+mod idempotency;
+#[cfg(feature = "idempotency")]
+pub use idempotency::{PgIdempotencyStore, idempotency_migration};
+
 /// SQLx remains accessible for adapter-specific queries and types.
 pub use sqlx;
 
